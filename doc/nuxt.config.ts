@@ -1,10 +1,11 @@
+import { defineNuxtConfig } from 'nuxt'
 import colors from 'vuetify/lib/util/colors'
 const path = require('path')
 
-module.exports = {
+export default defineNuxtConfig({
   ssr: true,
   build: {
-    transpile: [/@koumoul/, 'tiptap-vuetify', /lib/],
+    transpile: [/@koumoul/, 'tiptap-vuetify', /lib/, 'vuetify'],
     extend (config, ctx) {
       // Include the compiler version of Vue so that we can compile examples templates
       config.resolve.alias['vue$'] = 'vue/dist/vue.esm.js'
@@ -16,11 +17,10 @@ module.exports = {
     '@nuxtjs/axios'
   ],
   buildModules: [
-    '@nuxtjs/vuetify'
+    // '@nuxtjs/vuetify'
   ],
   plugins: [
     { src: '~/plugins/highlight.js', ssr: false },
-    { src: '~/plugins/mask.js', ssr: false },
     { src: '~/plugins/tiptap-vuetify.js', ssr: false }
   ],
   vuetify: {
@@ -60,4 +60,4 @@ module.exports = {
       async: true
     }]
   }
-}
+})

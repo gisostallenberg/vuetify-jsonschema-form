@@ -79,7 +79,7 @@ v-hljs
 dark
 class="codeblock"
 >
-      <pre><code class="javascript">// you should have something like the following somewhere in webpack.config.js or nuxt.config.js, etc.
+      <pre><code class="javascript">// you should have something like the following somewhere in webpack.config.js or nuxt.config.ts, etc.
 build: {
   transpile: ['vuetify/lib', /@koumoul/], // necessary for "à la carte" import of vuetify components
 }
