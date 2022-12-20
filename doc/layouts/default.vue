@@ -113,13 +113,13 @@
         v-if="$vuetify.breakpoint.smAndDown"
         @click.stop="drawer = !drawer"
       />
-      <search-widget
+      <!--search-widget
         df-url="https://koumoul.com/data-fair"
         dataset-id="vjsf-1"
         :menu-props="{'nudge-left': $vuetify.breakpoint.smAndDown ? 20 : 0}"
         :replace-url="{'https://koumoul-dev.github.io/vuetify-jsonschema-form/latest': ''}"
         :to-links="true"
-      />
+      /-->
       <v-spacer />
       <v-btn
         href="https://github.com/sponsors/koumoul-dev"
@@ -161,12 +161,12 @@
 </template>
 
 <script>
-import SearchWidget from '@koumoul/data-fair-search-widget/src/components/search-widget.vue'
+// import SearchWidget from '@koumoul/data-fair-search-widget/src/components/search-widget.vue'
 import { examples } from '~/examples'
 import { version } from '~/../package.json'
 
 export default {
-  components: { SearchWidget },
+  // components: { SearchWidget },
   data: () => ({
     examples,
     version,

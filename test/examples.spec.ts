@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime'
 import { examples } from '../doc/examples'
-const utils = require('./utils')
+import { getExampleWrapper } from './utils'
+import { describe, test, expect } from 'vitest'
 
 expect.addSnapshotSerializer({
   test(val) {
@@ -27,7 +28,7 @@ describe('Examples used as simple test cases', () => {
       if (example.skip) continue
       if (hasOnly && !example.only) continue
       test(example.title, () => {
-        const { wrapper, modelWrapper, events } = utils.getExampleWrapper(example)
+        const { wrapper, modelWrapper, events } = getExampleWrapper(example)
         // wait a little bit for optional asynchronous calls
         return new Promise(resolve => setTimeout(resolve, 200)).then(() => {
           expect(wrapper.element).toMatchSnapshot()
