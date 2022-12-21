@@ -5,3 +5,4 @@ node_modules
 /doc/.nuxt
 .idea/
 test/__snapshots__
+.nuxt

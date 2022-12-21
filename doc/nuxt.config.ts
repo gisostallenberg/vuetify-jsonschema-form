@@ -1,4 +1,4 @@
-import { defineNuxtConfig } from 'nuxt'
+import { defineNuxtConfig } from 'nuxt/config'
 import colors from 'vuetify/lib/util/colors'
 const path = require('path')
 
@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     '@nuxtjs/axios'
   ],
   buildModules: [
-    // '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify'
   ],
   plugins: [
     { src: '~/plugins/highlight.js', ssr: false },
