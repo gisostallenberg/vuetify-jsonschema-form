@@ -1,26 +1,45 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify'
+import { createApp } from 'vue'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 import Draggable from 'vuedraggable'
-import { createLocalVue, mount } from '@vue/test-utils'
-import VueMask from 'v-mask'
+// @ts-ignore
 import VJsf from '../lib/VJsfNoDeps.js'
-import ExampleForm from './example-form.vue'
+// @ts-ignore
 import { defaultTemplate } from '../doc/examples'
+import { mount } from '@vue/test-utils'
+// @ts-ignore
+import ExampleForm from './example-form.vue'
+import Ajv from 'ajv'
+import ajvFormats from 'ajv-formats'
+import ajvLocalize from 'ajv-i18n'
 
-Vue.use(Vuetify)
-const localVue = createLocalVue()
-localVue.component('VJsf', VJsf)
-localVue.component('Draggable', Draggable)
-Vue.use(VueMask)
+const App = {
+  computed: {
+    count() {
+      return this.$state.count
+    }
+  }
+}
 
-exports.getExampleWrapper = (example) => {
-  const vuetify = new Vuetify({ mocks: { $vuetify: { theme: { themes: {} } } } })
+const app = createApp(App)
 
-  // localVue.use(Vuetify)
+const vuetify = createVuetify({
+  components,
+  directives
+})
 
-  // const wrapper = mount(VJsf, { vuetify, propsData: example })
-  // Vue.options.components.VForm.$options.components = Vue.options.components
-  // const wrapper = mount(localVue.options.components.VForm, {
+app.use(vuetify)
+
+app.component('VJsf', VJsf)
+app.component('Draggable', Draggable)
+
+export function getExampleWrapper(example) {
+  const vuetify = createVuetify({
+    components,
+    directives
+  })
+
   const template = (example.template || defaultTemplate)
     .replace('"model"', '"props.modelWrapper.model"')
     .replace('"schema"', '"props.schema"')
@@ -33,13 +52,12 @@ exports.getExampleWrapper = (example) => {
     return
   }
 
-  const Ajv = require('ajv')
-  const ajvFormats = require('ajv-formats')
-  const ajvLocalize = require('ajv-i18n')
+  // const Ajv = require('ajv')
+  const ajv = new Ajv({ allErrors: true })
 
   const options = {
     ...example.options,
-    Ajv,
+    ajv,
     ajvFormats,
     ajvLocalize,
     httpLib: {
@@ -59,19 +77,16 @@ exports.getExampleWrapper = (example) => {
   const events = []
 
   const wrapper = mount(ExampleForm, {
-    localVue,
-    vuetify,
-    scopedSlots: {
-      default: template
-    },
-    propsData: {
+    props: {
       modelWrapper,
       schema: example.schema,
       options,
-      logEvent: (key, event) => events.push({ key, event })
+      logEvent: (event) => {
+        events.push(event)
+      }
     },
-    provide: {
-      theme: {}
+    global: {
+      plugins: [vuetify]
     }
   })
 

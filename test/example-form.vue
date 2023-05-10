@@ -4,28 +4,23 @@
     v-model="valid"
   >
     <slot
-      :model-wrapper="modelWrapper"
-      :options="options"
-      :schema="schema"
-      :log-event="logEvent"
+      :model-wrapper="props.modelWrapper"
+      :options="props.options"
+      :schema="props.schema"
+      :log-event="props.logEvent"
     />
   </v-form>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, defineProps } from 'vue'
 
-export default {
-  props: {
-    modelWrapper: { type: Object, required: true },
-    schema: { type: Object, required: true },
-    options: { type: Object, required: true },
-    logEvent: { type: Function, required: true }
-  },
-  data: () => ({
-    valid: false
-  })
-}
+const props = defineProps([
+  'modelWrapper',
+  'schema',
+  'options',
+  'logEvent'
+])
+
+const valid = ref(false)
 </script>
-
-<style lang="css" scoped>
-</style>

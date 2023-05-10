@@ -4,3 +4,5 @@ node_modules
 /doc/dist
 /doc/.nuxt
 .idea/
+test/__snapshots__
+.nuxt
